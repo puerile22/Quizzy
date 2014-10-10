@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140721170528) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "questions", force: true do |t|
     t.text     "question"
     t.text     "answer"
@@ -25,7 +28,7 @@ ActiveRecord::Schema.define(version: 20140721170528) do
     t.string   "choices"
   end
 
-  add_index "questions", ["quiz_id"], name: "index_questions_on_quiz_id"
+  add_index "questions", ["quiz_id"], name: "index_questions_on_quiz_id", using: :btree
 
   create_table "quizzes", force: true do |t|
     t.string   "title"
