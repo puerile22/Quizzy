@@ -1,4 +1,12 @@
-<h2>Quizzy Quiz</h2>
+<script type="text/template" class="multitemplate">
+  <h4><%%= question %></h4>
+  <%% _.each(<%% choices %>,function(choice){ %> 
+      <input type='radio' name='choice' id='<%%= choice %>' value='<%%= choice %>'><label for='<%%= choice %>'><%%= choice %></label><br/>  
+    <%% }); %>
+  <button type='button'>Submit!</button>
+  <p class='answer'><%%= answer %></p>
+</script>
+
 
 <div class="main">
 <h3>Select the quiz you want to take</h3>

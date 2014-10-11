@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require foundation
 //= require turbolinks
 //= require underscore
 // Your Quizzy code should go here.
@@ -94,8 +95,9 @@ var singleQuestion = function(id,num,score) {
     }
   });
 };
-$(document).ready(function(){
+var showQuiz = function() {
   $.get('/quizzes',function(data){
+    $('.main').empty();
     for (var i = 0;i<data.length;i++) {
       var quizz = template({
         title: data[i].title,
@@ -105,5 +107,13 @@ $(document).ready(function(){
       showquestion(data[i].id);
     }
   });
+};
+$(document).ready(function(){
+  showQuiz();
+  $('#topbar').click(function(e){
+    e.preventDefault();
+    showQuiz();
+  });
 
 });
+$(function(){ $(document).foundation(); });
