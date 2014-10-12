@@ -17,9 +17,6 @@
 //= require underscore
 // Your Quizzy code should go here.
 var template = _.template("<a href='' id='<%= id %>'><%= title %></a><br>");
-var multiQuestionList = "<h4><%= question %></h4><% _.each(choices,function(choice){ %> <input type='radio' name='choice' id='<%= choice %>' value='<%= choice %>'><label for='<%= choice %>'><%= choice %></label><br/>  <% }); %><button type='button'>Submit!</button><p class='answer'><%= answer %></p>";
-var booleanQuestionList = "<h4><%= question %></h4><input type='radio' name='choice' id='true' value='true'><label for='true'>True!</label><br/><input type='radio' name='choice' id='false' value='false'><label for='false'>False!</label><br/><button type='button'>Submit!</button><p class='answer'><%= answer %></p>";
-var blankQuestionList = "<h4><%= question %></h4><input type='text' id='answer'><button type='button'>Submit!</button><p class='answer'><%= answer %></p>";
 var answerQuestion = function(id,num,score){
   $('button').click(function(){
     if ($('.answer').text() === $('input:checked').val()) {
@@ -49,24 +46,31 @@ var answerQuestionBlank = function(id,num,score){
   });
 };
 var multipleQuestion = function(id,num,score,questionId) {
+  var multiTemplate = _.template($('.multitemplate').html());
   $.get('/quizzes/'+id+'/questions/'+questionId+'',function(questionData){
-    var question = _.template(multiQuestionList,{question:questionData.question,choices:questionData.choices.split(";"),answer:questionData.answer});
+    var question = multiTemplate({
+      question:questionData.question,
+      choices:questionData.choices.split(";"),
+      answer:questionData.answer
+    });
     $('.main').append(question);
     $('input:eq(0)').attr("checked",true);
     answerQuestion(id,num,score);
   });
 };
 var booleanQuestion = function(id,num,score,questionId) {
+  var booleanQuestionList = _.template($('.booleantemplate').html());
   $.get('/quizzes/'+id+'/questions/'+questionId+'',function(questionData){
-    var question = _.template(booleanQuestionList,{question:questionData.question,answer:questionData.answer});
+    var question = booleanQuestionList({question:questionData.question,answer:questionData.answer});
     $('.main').append(question);
     $('input:eq(0)').attr("checked",true);
     answerQuestion(id,num,score);
   });
 };
 var blankQuestion = function(id,num,score,questionId) {
+  var blankQuestionList = _.template($('.blanktemplate').html());
   $.get('/quizzes/'+id+'/questions/'+questionId+'',function(questionData){
-    var question = _.template(blankQuestionList,{question:questionData.question,answer:questionData.answer});
+    var question = blankQuestionList({question:questionData.question,answer:questionData.answer});
     $('.main').append(question);
     answerQuestionBlank(id,num,score);
   });

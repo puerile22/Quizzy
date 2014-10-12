@@ -1,13 +1,26 @@
 <script type="text/template" class="multitemplate">
   <h4><%%= question %></h4>
-  <%% _.each(<%% choices %>,function(choice){ %> 
+  <%% _.each(choices,function(choice){ %> 
       <input type='radio' name='choice' id='<%%= choice %>' value='<%%= choice %>'><label for='<%%= choice %>'><%%= choice %></label><br/>  
-    <%% }); %>
+    <%% }) %>
+  <button type = 'button'>Submit!</button>
+  <p class='answer'><%%= answer %></p>
+</script>
+<script type = "text/template" class = "booleantemplate">
+  <h4><%%= question %></h4>
+  <input type='radio' name='choice' id='true' value='true'>
+  <label for='true'>True!</label><br/>
+  <input type='radio' name='choice' id='false' value='false'>
+  <label for='false'>False!</label><br/>
   <button type='button'>Submit!</button>
   <p class='answer'><%%= answer %></p>
 </script>
-
-
+<script type = "text/template" class = "blanktemplate">
+  <h4><%%= question %></h4>
+  <input type='text' id='answer'>
+  <button type='button'>Submit!</button>
+  <p class='answer'><%%= answer %></p>
+</script>
 <div class="main">
 <h3>Select the quiz you want to take</h3>
 </div>
