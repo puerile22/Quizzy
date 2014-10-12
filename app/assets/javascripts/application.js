@@ -118,6 +118,11 @@ $(document).ready(function(){
     e.preventDefault();
     showQuiz();
   });
+  $('#addquiz').click(function(e){
+    e.preventDefault();
+    $('.main').empty();
+    $('.main').append("<h2>Create new quiz</h2><label for='newquiz'>Quiz name</label><br><input type='text' id='newquiz'><br><button type='button'>Create!</button>");
+  });
 
 });
 $(function(){ $(document).foundation(); });
