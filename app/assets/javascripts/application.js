@@ -122,6 +122,16 @@ $(document).ready(function(){
     e.preventDefault();
     $('.main').empty();
     $('.main').append("<h2>Create new quiz</h2><label for='newquiz'>Quiz name</label><br><input type='text' id='newquiz'><br><button type='button'>Create!</button>");
+    $('button').click(function(){
+      var quiz = $('#newquiz').val();
+      $.ajax({
+        type:"POST",
+        url:"/quizzes",
+        data:{quiz:{title:quiz}}
+      }).done(function(data){
+        console.log(data);
+      });
+    });
   });
 
 });
