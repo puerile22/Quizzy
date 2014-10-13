@@ -144,7 +144,13 @@ var topScore = function(id) {
   $('.scores-'+id+'').click(function(e){
     e.preventDefault();
     $.get('/scores',{quiz_id:id},function(data){
-      
+      data.sort(function(a,b){
+        return a.score-b.score
+      });
+      data = data.reverse().splice(0,10); 
+      $('.main').empty();
+      var scores = topScoreTemplate({scores:data});
+      $('.main').append(scores);
     });
   });
 };
