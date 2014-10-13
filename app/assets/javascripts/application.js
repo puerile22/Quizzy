@@ -113,27 +113,39 @@ var showQuiz = function() {
         id: data[i].id
       });
       $('.main').append(quizz);
-      $('.'+data[i].id+'').click(function(e){
-        e.preventDefault();
-        var quizId = $(this).attr('class');
-        $('.main').empty();
-        $('.main').append("<h2>Add new question</h2><label for='newquestion'>Question:</label><br><input type='text' id='newquestion'><br><label for='type'>Question type:</label><br><select id='type'><option>multiple</option><option>boolean</option><option>blank</option></select>");
-        $('.main').append("<div class='option'></div>");
-        $('.option').append("<label for='choices'>Choices:</label><br>");
-        $('.option').append("<input type='text' id='choices' disabled><br>");
-        $('.option').append("<label for='newchoice'>Add choice:</label><br>");
-        $('.option').append("<input type='text' id='choice'><br>");
-        $('.option').append("<button type='button' id='addchoice'>Add choice!</button>");
-        addChoice();
-        $('.option').append("<label for='answer'>Answer:</label>");
-        $('.option').append("<input type='text' id='answer'><br>");
-        $('.main').append("<button type='button' id='submit'>Add!</button>");
-        questionType();
-        addQuestion(quizId);
-      });
+      newQuestion(data[i].id);
+      topScore(data[i].id);
       showquestion(data[i].id);
-
     }
+  });
+};
+var newQuestion = function(id) {
+  $('.'+id+'').click(function(e){
+    e.preventDefault();
+    var quizId = $(this).attr('class');
+    $('.main').empty();
+    $('.main').append("<h2>Add new question</h2><label for='newquestion'>Question:</label><br><input type='text' id='newquestion'><br><label for='type'>Question type:</label><br><select id='type'><option>multiple</option><option>boolean</option><option>blank</option></select>");
+    $('.main').append("<div class='option'></div>");
+    $('.option').append("<label for='choices'>Choices:</label><br>");
+    $('.option').append("<input type='text' id='choices' disabled><br>");
+    $('.option').append("<label for='newchoice'>Add choice:</label><br>");
+    $('.option').append("<input type='text' id='choice'><br>");
+    $('.option').append("<button type='button' id='addchoice'>Add choice!</button>");
+    addChoice();
+    $('.option').append("<label for='answer'>Answer:</label>");
+    $('.option').append("<input type='text' id='answer'><br>");
+    $('.main').append("<button type='button' id='submit'>Add!</button>");
+    questionType();
+    addQuestion(quizId);
+  });
+};
+var topScore = function(id) {
+  var topScoreTemplate = _.template($('.topscore').html());
+  $('.scores-'+id+'').click(function(e){
+    e.preventDefault();
+    $.get('/scores',{quiz_id:id},function(data){
+      
+    });
   });
 };
 var addQuestion = function(id) {

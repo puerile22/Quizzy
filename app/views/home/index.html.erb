@@ -1,6 +1,7 @@
 <script type="text/template" class="quizzestemplate">
   <a href='' id='<%%= id %>'><%%= title %></a> 
-  <a href='' class='<%%= id %>'>Add new question</a><br>
+  <a href='' class='<%%= id %>'>Add new question</a>
+  <a href='' class='scores-<%%= id %>'>Top scores</a><br>
 </script>
 <script type="text/template" class="multitemplate">
   <h4><%%= question %></h4>
@@ -24,6 +25,18 @@
   <input type='text' id='answer'>
   <button type='button'>Submit!</button>
   <p class='answer'><%%= answer %></p>
+</script>
+<script type = "text/template" class = "topscore">
+  <h2>Top score</h2>
+  <table>
+    <tr>
+      <th>User</th>
+      <th>Score</th>
+    </tr>
+    <%% _.each(scores,function(score){ %>
+      <tr><td><%%= score.user %></td><td><%%= score.score %></td></tr>
+    <%% }) %>
+  </table>
 </script>
 <div class="main">
 <h3>Select the quiz you want to take</h3>
