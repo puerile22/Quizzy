@@ -118,6 +118,7 @@ var question = {
         question.topScore(data[i].id);
         question.showStats(data[i].id);
         question.showquestion(data[i].id);
+        question.deleteQuiz(data[i].id);
       }
     });
   },
@@ -216,6 +217,17 @@ var question = {
         $('#choice').val("");
       }
       question.answerSelect();
+    });
+  },
+  deleteQuiz:function(id){
+    $('.delete-'+id+'').click(function(e){
+      e.preventDefault();
+      $.ajax({
+        type:'DELETE',
+        url:'/quizzes/'+id+'',
+        data:{id:id}
+      });
+      $('.delete-'+id+'').parent().remove();
     });
   }
 };
