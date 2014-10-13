@@ -79,46 +79,13 @@ var question = {
           question.blankQuestion(id,num,score,questionId);
         }
       } else {
-        score = Math.floor((score/data.length) * 100) ;
+        score = ((score/data.length) * 100).toFixed(0) ;
         $('.main').append("<h2>Final score:"+score+"</h2>");
         $.ajax({
           type:'POST',
           url:'/scores',
           data:{score:{score:score,user:user},quiz_id:id}
         });
-      }
-    });
-  },
-  showStats:function(id){
-    $('.stats-'+id+'').click(function(e){
-      e.preventDefault();
-      $.get('/scores',{quiz_id:id},function(data){
-        var sum = 0;
-        for (var i = 0;i < data.length;i++){
-          sum += data[i].score;
-        }
-        var average = sum/data.length;
-        $('.main').empty();
-        $('.main').append("<h2>Average score:"+average+"");
-      });
-    });
-  },
-  showQuiz:function() {
-    var template = _.template($('.quizzestemplate').html());
-    $.get('/quizzes',function(data){
-      $('.main').empty();
-      $('.main').append("<h3>Select the quiz you want to take</h3>");
-      for (var i = 0;i<data.length;i++) {
-        var quizz = template({
-          title: data[i].title,
-          id: data[i].id
-        });
-        $('.main').append(quizz);
-        question.newQuestion(data[i].id);
-        question.topScore(data[i].id);
-        question.showStats(data[i].id);
-        question.showquestion(data[i].id);
-        question.deleteQuiz(data[i].id);
       }
     });
   },
@@ -163,21 +130,6 @@ var question = {
         $('.option').append("<label for='answer'>Answer:</label>");
         $('.option').append("<select id='answer'></select>");
       }
-    });
-  },
-  topScore:function(id) {
-    var topScoreTemplate = _.template($('.topscore').html());
-    $('.scores-'+id+'').click(function(e){
-      e.preventDefault();
-      $.get('/scores',{quiz_id:id},function(data){
-        data.sort(function(a,b){
-          return a.score-b.score
-        });
-        data = data.reverse().splice(0,10); 
-        $('.main').empty();
-        var scores = topScoreTemplate({scores:data});
-        $('.main').append(scores);
-      });
     });
   },
   addQuestion:function(id) {
@@ -243,15 +195,7 @@ var question = {
       question.answerSelect();
     });
   },
-  deleteQuiz:function(id){
-    $('.delete-'+id+'').click(function(e){
-      e.preventDefault();
-      $.ajax({
-        type:'DELETE',
-        url:'/quizzes/'+id+'',
-        data:{id:id}
-      });
-      $('.delete-'+id+'').parent().remove();
-    });
+  deleteQuestion:function(){
+    $('#delete')
   }
 };

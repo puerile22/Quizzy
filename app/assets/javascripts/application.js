@@ -15,6 +15,7 @@
 //= require foundation
 //= require turbolinks
 //= require underscore
+//= require quiz
 //= require question
 // Your Quizzy code should go here.
 var user;
@@ -22,10 +23,10 @@ var user;
 $(document).ready(function(){
   $('#new-user').click(function(){
     user = $('input').val();
-    question.showQuiz();
+    quiz.showQuiz();
     $('#topbar').click(function(e){
       e.preventDefault();
-      question.showQuiz();
+      quiz.showQuiz();
     });
     $('#addquiz').click(function(e){
       e.preventDefault();
@@ -41,7 +42,7 @@ $(document).ready(function(){
           var title = data.entity.title;
           $('.main').empty();
           $('.main').append("<h2>Successfully create new quiz '"+title+"'");
-          setTimeout(function(){question.showQuiz();},2000);
+          setTimeout(function(){quiz.showQuiz();},2000);
         });
       });
     });

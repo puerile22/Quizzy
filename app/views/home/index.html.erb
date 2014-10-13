@@ -42,6 +42,18 @@
     <%% }) %>
   </table>
 </script>
+<script type = "text/template" class = "editTemplate">
+  <h2>Edit quiz and questions</h2>
+  <label for='title'>Quiz name:</label><br>
+  <input type='text' id='title' value='<%%= title %>'>
+  <button type='button'>Update!</button>
+  <h2>Question list</h2>
+  <%% _.each(questions,function(question){ %>
+    <p><%%= question.question %> </p>
+    <a href='' id='delete-<%%= question.id %>'>  Edit</a>
+    <a href='' id='edit-<%%= question.id %>'>  Delete</a><br>
+  <%% }) %>
+  </script>
 <div class="main">
   <h1>Please enter your name to take quiz</h1>
   <input type='text'>
