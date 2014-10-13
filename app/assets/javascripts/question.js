@@ -136,10 +136,33 @@ var question = {
       $('.option').append("<button type='button' id='addchoice'>Add choice!</button>");
       question.addChoice();
       $('.option').append("<label for='answer'>Answer:</label>");
-      $('.option').append("<input type='text' id='answer'><br>");
+      $('.option').append("<select id='answer'></select>");
       $('.main').append("<button type='button' id='submit'>Add!</button>");
       question.questionType();
       question.addQuestion(quizId);
+    });
+  },
+  questionType:function() {
+    $('#type').change(function(){
+      if ($('select').val() === 'blank') {
+        $('.option').empty();
+        $('.option').append("<label for='answer'>Answer:</label>");  
+        $('.option').append("<input type='text' id='answer'>");
+      } else if ($('select').val() === 'boolean') {
+        $('.option').empty();
+        $('.option').append("<label for='answer'>Answer:</label>");  
+        $('.option').append("<input type='radio' id='answer' name='answer' value='true' checked>True!<br><input type='radio' id='answer' name='answer' value='false'>False!<br>");
+      } else {
+        $('.option').empty();
+        $('.option').append("<label for='choices'>Choices:</label><br>");
+        $('.option').append("<input type='text' id='choices' disabled><br>");
+        $('.option').append("<label for='newchoice'>Add choice:</label><br>");
+        $('.option').append("<input type='text' id='choice'><br>");
+        $('.option').append("<button type='button' id='addchoice'>Add choice!</button>");
+        question.addChoice();
+        $('.option').append("<label for='answer'>Answer:</label>");
+        $('.option').append("<select id='answer'></select>");
+      }
     });
   },
   topScore:function(id) {
@@ -199,6 +222,7 @@ var question = {
       }
       $('.main').empty();
       $('.main').append("<h2>Successfully add a new question!</h2>");
+      setTimeout(function(){question.showQuiz();},2000);
     });
   },
   answerSelect:function(){
