@@ -1,7 +1,8 @@
 <script type="text/template" class="quizzestemplate">
   <a href='' id='<%%= id %>'><%%= title %></a> 
   <a href='' class='<%%= id %>'>Add new question</a>
-  <a href='' class='scores-<%%= id %>'>Top scores</a><br>
+  <a href='' class='scores-<%%= id %>'>Top scores</a>
+  <a href='' class='stats-<%%= id %>'>Stats</a><br>
 </script>
 <script type="text/template" class="multitemplate">
   <h4><%%= question %></h4>
@@ -39,5 +40,7 @@
   </table>
 </script>
 <div class="main">
-<h3>Select the quiz you want to take</h3>
+  <h1>Please enter your name to take quiz</h1>
+  <input type='text'>
+  <button type='button' id='new-user'>Submit!</button>
 </div>

@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require underscore
 // Your Quizzy code should go here.
+var user;
 var answerQuestion = function(id,num,score){
   $('button').click(function(){
     if ($('.answer').text() === $('input:checked').val()) {
@@ -82,6 +83,9 @@ var showquestion = function(id){
 };
 var singleQuestion = function(id,num,score) {
   $.get('/quizzes/'+id+'/questions',function(data){
+    data.sort(function(a,b){
+      return a.id-b.id;
+    });
     $('.main').empty();
     if (num < data.length) {
       var questionId = data[num].id;
@@ -98,15 +102,30 @@ var singleQuestion = function(id,num,score) {
       $.ajax({
         type:'POST',
         url:'/scores',
-        data:{score:{score:score,quiz_id:id},quiz_id:id}
+        data:{score:{score:score,user:user},quiz_id:id}
       });
     }
+  });
+};
+var showStats = function(id){
+  $('.stats-'+id+'').click(function(e){
+    e.preventDefault();
+    $.get('/scores',{quiz_id:id},function(data){
+      var sum = 0;
+      for (var i = 0;i < data.length;i++){
+        sum += data[i].score;
+      }
+      var average = sum/data.length;
+      $('.main').empty();
+      $('.main').append("<h2>Average score:"+average+"");
+    });
   });
 };
 var showQuiz = function() {
   var template = _.template($('.quizzestemplate').html());
   $.get('/quizzes',function(data){
     $('.main').empty();
+    $('.main').append("<h3>Select the quiz you want to take</h3>");
     for (var i = 0;i<data.length;i++) {
       var quizz = template({
         title: data[i].title,
@@ -115,6 +134,7 @@ var showQuiz = function() {
       $('.main').append(quizz);
       newQuestion(data[i].id);
       topScore(data[i].id);
+      showStats(data[i].id);
       showquestion(data[i].id);
     }
   });
@@ -225,7 +245,6 @@ var answerSelect = function(){
   var choices = $('#choices').val();
   choices = choices.substring(0,choices.length-1).split(";");
   $('#answer').empty();
-  // $('.option').append("<select id='answer'></select>");
   for (var i = 0;i < choices.length;i++) {
     $('#answer').append("<option>"+choices[i]+"</option>");
   }
@@ -241,25 +260,29 @@ var addChoice = function(){
   });
 };
 $(document).ready(function(){
-  showQuiz();
-  $('#topbar').click(function(e){
-    e.preventDefault();
+  $('#new-user').click(function(){
+    user = $('input').val();
     showQuiz();
-  });
-  $('#addquiz').click(function(e){
-    e.preventDefault();
-    $('.main').empty();
-    $('.main').append("<h2>Create new quiz</h2><label for='newquiz'>Quiz name</label><br><input type='text' id='newquiz'><br><button type='button'>Create!</button>");
-    $('button').click(function(){
-      var quiz = $('#newquiz').val();
-      $.ajax({
-        type:"POST",
-        url:"/quizzes",
-        data:{quiz:{title:quiz}}
-      }).done(function(data){
-        var title = data.entity.title;
-        $('.main').empty();
-        $('.main').append("<h2>Successfully create new quiz '"+title+"'");
+    $('#topbar').click(function(e){
+      e.preventDefault();
+      showQuiz();
+    });
+    $('#addquiz').click(function(e){
+      e.preventDefault();
+      $('.main').empty();
+      $('.main').append("<h2>Create new quiz</h2><label for='newquiz'>Quiz name</label><br><input type='text' id='newquiz'><br><button type='button'>Create!</button>");
+      $('button').click(function(){
+        var quiz = $('#newquiz').val();
+        $.ajax({
+          type:"POST",
+          url:"/quizzes",
+          data:{quiz:{title:quiz}}
+        }).done(function(data){
+          var title = data.entity.title;
+          $('.main').empty();
+          $('.main').append("<h2>Successfully create new quiz '"+title+"'");
+          setTimeout(function(){showQuiz();},2000);
+        });
       });
     });
   });
