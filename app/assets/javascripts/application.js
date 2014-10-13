@@ -95,7 +95,12 @@ var singleQuestion = function(id,num,score) {
       }
     } else {
       score = Math.floor((score/data.length) * 100) ;
-      $('.main').append("<h2>Final score:"+score+"</h2>")
+      $('.main').append("<h2>Final score:"+score+"</h2>");
+      $.ajax({
+        type:'POST',
+        url:'/scores',
+        data:{score:{score:score,quiz_id:id},quiz_id:id}
+      });
     }
   });
 };
@@ -111,7 +116,6 @@ var showQuiz = function() {
       $('.'+data[i].id+'').click(function(e){
         e.preventDefault();
         var quizId = $(this).attr('class');
-        // var quizId = data[i].id;
         $('.main').empty();
         $('.main').append("<h2>Add new question</h2><label for='newquestion'>Question:</label><br><input type='text' id='newquestion'><br><label for='type'>Question type:</label><br><select id='type'><option>multiple</option><option>boolean</option><option>blank</option></select>");
         $('.main').append("<div class='option'></div>");
@@ -172,6 +176,8 @@ var addQuestion = function(id) {
       }
       });
     }
+    $('.main').empty();
+    $('.main').append("<h2>Successfully add a new question!</h2>");
   });
 };
 var questionType = function() {
@@ -203,7 +209,7 @@ var answerSelect = function(){
   $('#answer').empty();
   // $('.option').append("<select id='answer'></select>");
   for (var i = 0;i < choices.length;i++) {
-    $('#answer').append("<option>"+choices[i]+"");
+    $('#answer').append("<option>"+choices[i]+"</option>");
   }
 };
 var addChoice = function(){
