@@ -193,9 +193,18 @@ var questionType = function() {
       $('.option').append("<button type='button' id='addchoice'>Add choice!</button>");
       addChoice();
       $('.option').append("<label for='answer'>Answer:</label>");
-      $('.option').append("<input type='text' id='answer'><br>");
+      $('.option').append("<select id='answer'></select>");
     }
   });
+};
+var answerSelect = function(){
+  var choices = $('#choices').val();
+  choices = choices.substring(0,choices.length-1).split(";");
+  $('#answer').empty();
+  // $('.option').append("<select id='answer'></select>");
+  for (var i = 0;i < choices.length;i++) {
+    $('#answer').append("<option>"+choices[i]+"");
+  }
 };
 var addChoice = function(){
   $('#addchoice').click(function(){
@@ -204,6 +213,7 @@ var addChoice = function(){
       $('#choices').val(choices+$('#choice').val()+';');
       $('#choice').val("");
     }
+    answerSelect();
   });
 };
 $(document).ready(function(){
