@@ -16,7 +16,6 @@
 //= require turbolinks
 //= require underscore
 // Your Quizzy code should go here.
-var template = _.template("<a href='' id='<%= id %>'><%= title %></a>     <a href='' class='<%= id %>'>Add new question</a><br>");
 var answerQuestion = function(id,num,score){
   $('button').click(function(){
     if ($('.answer').text() === $('input:checked').val()) {
@@ -105,6 +104,7 @@ var singleQuestion = function(id,num,score) {
   });
 };
 var showQuiz = function() {
+  var template = _.template($('.quizzestemplate').html());
   $.get('/quizzes',function(data){
     $('.main').empty();
     for (var i = 0;i<data.length;i++) {
