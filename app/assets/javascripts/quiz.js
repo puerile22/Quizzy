@@ -68,7 +68,22 @@ var quiz={
       $.get('/quizzes/'+id+'/questions',function(data){
         var display = editTemplate({title:quizTitle,questions:data});
         $('.main').append(display);
+        quiz.updateQuiz(id);
         question.deleteQuestion(id);
+      });
+    });
+  },
+  updateQuiz:function(id){
+    $('button').click(function(){
+      var title = $('#title').val();
+      $.ajax({
+        type:"PUT",
+        url:"/quizzes/"+id+"",
+        data:{quiz:{title:title},id:id}
+      }).done(function(){
+        quiz.editQuiz(id);
+        $('.main').prepend("<h2 id='success'>Edit successful!</h2>");
+        setTimeout(function(){$('#success').remove();},1000);
       });
     });
   }
