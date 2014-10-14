@@ -195,7 +195,16 @@ var question = {
       question.answerSelect();
     });
   },
-  deleteQuestion:function(){
-    $('#delete')
+  deleteQuestion:function(quiz_id){
+    $('.delete').click(function(e){
+      e.preventDefault();
+      var id = $(this).attr('class').slice(7);
+      $(this).parent().remove();
+      $.ajax({
+        type:'DELETE',
+        url:'/quizzes/'+quiz_id+'/questions/'+id+'',
+        data:{quiz_id:quiz_id,id:id}
+      });
+    });
   }
 };

@@ -49,9 +49,11 @@
   <button type='button'>Update!</button>
   <h2>Question list</h2>
   <%% _.each(questions,function(question){ %>
-    <p><%%= question.question %> </p>
-    <a href='' id='delete-<%%= question.id %>'>  Edit</a>
-    <a href='' id='edit-<%%= question.id %>'>  Delete</a><br>
+    <div>
+      <p><%%= question.question %> </p>
+      <a href='' class='edit <%%= question.id %>'>  Edit</a>
+      <a href='' class='delete <%%= question.id %>'>  Delete</a>
+    </div>
   <%% }) %>
   </script>
 <div class="main">

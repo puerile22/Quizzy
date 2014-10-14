@@ -68,6 +68,7 @@ var quiz={
       $.get('/quizzes/'+id+'/questions',function(data){
         var display = editTemplate({title:quizTitle,questions:data});
         $('.main').append(display);
+        question.deleteQuestion(id);
       });
     });
   }
