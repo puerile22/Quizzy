@@ -206,14 +206,14 @@ var question = {
         data:{quiz_id:quiz_id,id:id}
       });
     });
-  },
-  editQuestion:function(quiz_id){
-    $('.edit').click(function(e){
-      e.preventDefault();
-      var id = $(this).attr('.class').slice(5);
-      $.get('/quizzes/'+quiz_id+'/questions/'+id+'',function(data){
-        
-      })
-    })
   }
+  // editQuestion:function(quiz_id){
+  //   $('.edit').click(function(e){
+  //     e.preventDefault();
+  //     var id = $(this).attr('.class').slice(5);
+  //     $.get('/quizzes/'+quiz_id+'/questions/'+id+'',function(data){
+        
+  //     })
+  //   })
+  // }
 };
