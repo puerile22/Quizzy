@@ -174,7 +174,7 @@ var question = {
       }
       $('.main').empty();
       $('.main').append("<h2>Successfully add a new question!</h2>");
-      setTimeout(function(){question.showQuiz();},2000);
+      setTimeout(function(){quiz.showQuiz();},2000);
     });
   },
   answerSelect:function(){

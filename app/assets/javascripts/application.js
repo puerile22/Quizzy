@@ -33,11 +33,11 @@ $(document).ready(function(){
       $('.main').empty();
       $('.main').append("<h2>Create new quiz</h2><label for='newquiz'>Quiz name</label><br><input type='text' id='newquiz'><br><button type='button'>Create!</button>");
       $('button').click(function(){
-        var quiz = $('#newquiz').val();
+        var newquiz = $('#newquiz').val();
         $.ajax({
           type:"POST",
           url:"/quizzes",
-          data:{quiz:{title:quiz}}
+          data:{quiz:{title:newquiz}}
         }).done(function(data){
           var title = data.entity.title;
           $('.main').empty();
