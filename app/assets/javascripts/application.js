@@ -15,38 +15,39 @@
 //= require foundation
 //= require turbolinks
 //= require underscore
-//= require quiz
-//= require question
+//= require_tree ./models
+//= require_tree ./views
+//= require_tree ./controllers
 // Your Quizzy code should go here.
 var user;
 
-$(document).ready(function(){
-  $('#new-user').click(function(){
-    user = $('input').val();
-    quiz.showQuiz();
-    $('#topbar').click(function(e){
-      e.preventDefault();
-      quiz.showQuiz();
-    });
-    $('#addquiz').click(function(e){
-      e.preventDefault();
-      $('.main').empty();
-      $('.main').append("<h2>Create new quiz</h2><label for='newquiz'>Quiz name</label><br><input type='text' id='newquiz'><br><button type='button'>Create!</button>");
-      $('button').click(function(){
-        var newquiz = $('#newquiz').val();
-        $.ajax({
-          type:"POST",
-          url:"/quizzes",
-          data:{quiz:{title:newquiz}}
-        }).done(function(data){
-          var title = data.entity.title;
-          $('.main').empty();
-          $('.main').append("<h2>Successfully create new quiz '"+title+"'");
-          setTimeout(function(){quiz.showQuiz();},2000);
-        });
-      });
-    });
-  });
+// $(document).ready(function(){
+//   $('#new-user').click(function(){
+//     user = $('input').val();
+//     quiz.showQuiz();
+//     $('#topbar').click(function(e){
+//       e.preventDefault();
+//       quiz.showQuiz();
+//     });
+//     $('#addquiz').click(function(e){
+//       e.preventDefault();
+//       $('.main').empty();
+//       $('.main').append("<h2>Create new quiz</h2><label for='newquiz'>Quiz name</label><br><input type='text' id='newquiz'><br><button type='button'>Create!</button>");
+//       $('button').click(function(){
+//         var newquiz = $('#newquiz').val();
+//         $.ajax({
+//           type:"POST",
+//           url:"/quizzes",
+//           data:{quiz:{title:newquiz}}
+//         }).done(function(data){
+//           var title = data.entity.title;
+//           $('.main').empty();
+//           $('.main').append("<h2>Successfully create new quiz '"+title+"'");
+//           setTimeout(function(){quiz.showQuiz();},2000);
+//         });
+//       });
+//     });
+//   });
 
-});
+// });
 $(function(){ $(document).foundation(); });
