@@ -1,6 +1,7 @@
 var quizView = function(){
   var view = this;
-    }
+  $(document).on('quiz',function(e,data){
+
   });
 };
 
